@@ -226,10 +226,15 @@ if __name__ == "__main__":
             script_save_dir, file_name_no_extension + ".sh"
         )
         vgdata_out_path = os.path.join(vgb_data_path, config_dir_name)
+        sbatch_logging_dir = os.path.join(
+            slurm_logging_dir, config_dir_name
+        )
+
         sbatch_logging_path = os.path.join(
-            slurm_logging_dir, config_dir_name, file_name_no_extension
+            sbatch_logging_dir, file_name_no_extension
         )
         os.makedirs(script_save_dir, exist_ok=True)
+        os.makedirs(sbatch_logging_dir, exist_ok=True)
 
         save_run_script(
             generate_run_script(
