@@ -79,7 +79,7 @@ def extract_method_file(methods_root_dir, config_file_name):
 
 # the running policy hould be folloed
 GPUs_setups = {
-    1: {"n_cpus": 12, "memory": 72, "time": 200},
+    1: {"n_cpus": 12, "memory": 72, "time": 24},
     2: {"n_cpus": 24, "memory": 144, "time": 24},
     3: {"n_cpus": 36, "memory": 216, "time": 12},
 }
