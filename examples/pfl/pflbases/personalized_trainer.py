@@ -362,6 +362,9 @@ class Trainer(basic.Trainer):
         self.personalized_model.eval()
         self.personalized_model.to(self.device)
 
+        self.model.eval()
+        self.model.to(self.device)
+
         data_loader = self.get_test_loader(
             config["batch_size"],
         )
@@ -388,6 +391,7 @@ class Trainer(basic.Trainer):
         self.test_metrics_collector.set_accuracy(accuracy)
 
         self.personalized_model.train()
+        self.model.train()
 
     def perform_personalized_metric_checkpoint(self, config):
         """Performing the test for the personalized model and saving the accuracy to
