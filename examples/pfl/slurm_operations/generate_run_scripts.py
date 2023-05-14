@@ -225,7 +225,8 @@ if __name__ == "__main__":
         script_save_file_path = os.path.join(
             script_save_dir, file_name_no_extension + ".sh"
         )
-        vgdata_out_path = os.path.join(vgb_data_path, config_dir_name)
+        vgdata_out_path = os.path.join(vgb_data_path, config_dir_name, file_name_no_extension)
+
         sbatch_logging_dir = os.path.join(
             slurm_logging_dir, config_dir_name
         )
