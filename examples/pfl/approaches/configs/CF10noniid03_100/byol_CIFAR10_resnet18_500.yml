@@ -1,7 +1,7 @@
 clients:
 
     # The total number of clients
-    total_clients: 100
+    total_clients: 150
 
     # The number of clients selected in each round
     per_round: 10
@@ -105,7 +105,7 @@ algorithm:
         model_logging_epoch_interval: 5
 
         # the ratio of clients participanting in training
-        participant_clients_ratio: 0.5
+        participant_clients_ratio: 0.66667
         
         # whether maintain and load the trained 
         # personalied model
