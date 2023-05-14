@@ -54,15 +54,22 @@ from slurm_utils import load_yml_config
 logging.getLogger().setLevel(logging.INFO)
 
 
+def search_file(folder_path, target_file):
+    """ Search the file under one foler. """
+    for root, _, files in os.walk(folder_path):
+        if target_file in files:
+            return os.path.join(root, target_file).replace("~", str(Path.home()))
+    return None
+
 def extract_method_file(methods_root_dir, config_file_name):
     """Extract the Python file path of the corresponding method."""
     extracted_method_name = config_file_name.split("_")[0].split(".")[0]
 
-    method_python_file_path = os.path.join(
-        methods_root_dir, extracted_method_name, extracted_method_name + ".py"
-    ).replace("~", str(Path.home()))
+    desired_file_name = extracted_method_name + ".py"
 
-    if not os.path.exists(method_python_file_path):
+    method_python_file_path = search_file(methods_root_dir, desired_file_name)
+   
+    if not os.path.exists(method_python_file_path) or method_python_file_path is None:
         logging.info(
             "Skipping as the method for %s is not existed!...\n", config_file_name
         )

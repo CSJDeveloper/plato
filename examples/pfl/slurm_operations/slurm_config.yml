@@ -1,0 +1,31 @@
+
+
+data:
+  # the data type exchanged between the server and local machine.
+  # all: send all obtained data to local machine
+  # slurm_loggings: logging file produced by Slurm
+  # loggings: logging file produced by VGBase
+  # models: models produced by VGBase
+  # checkpoints: checkpoints produced by VGBase
+  # results: results produced by VGBase
+  type: all 
+
+server:
+  address: YourRemoteServerAddress
+  logging_dir: WhereSlurmLogginStored
+  vgb_data_dir: /data/sijia/NIPS23
+  vgb_data_basename: experiments
+
+local:
+  logging_dir: WhereToSaveTheLoggingLocally
+  vgb_data_dir:  WhereToSaveVGBaseOutputsLocally
+  data_basename: experiments
+
+run:
+  n_gpus: 1
+  research_dir: &research_dir /Users/sjia/Documents/Research/MyPapers/contrastivePFL/repo/code/plato/examples/pfl
+  examples_dir: !join [*research_dir, approaches] 
+  configs_dir: !join [*research_dir, approaches, configs] 
+  script_out_dir: !join [*research_dir, approaches, run_scripts]
+  slurm_logging_dir: !join [*research_dir, slurm_loggings] 
+  python_path: /home/sijia/envs/miniconda3/envs/INFOCOM23/bin/python
