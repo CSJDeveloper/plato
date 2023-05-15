@@ -13,7 +13,7 @@ clients:
 server:
 
     address: 127.0.0.1
-    port: 8000
+    port: 8006
 
     do_test: false
     
@@ -42,7 +42,6 @@ data:
 
 trainer:
 
-
     # The maximum number of training rounds
     rounds: 300
 
@@ -55,16 +54,18 @@ trainer:
     # Number of epoches for local training in each communication round
     epochs: 2
     batch_size: 256
-    optimizer: LARS
+    optimizer: SGD
     lr_scheduler: CosineAnnealingLR
     global_lr_scheduler: true
-    loss_criterion: NTXentLoss
+    loss_criterion: SwaVLoss
 
     # The machine learning model
-    model_name: SimCLR
+    model_name: SwaV
     encoder_name: resnet_18
-    projection_hidden_dim: 2048
+
+    projection_hidden_dim: 1024
     projection_out_dim: 256
+    n_prototypes: 128
 
     global_modules_name:
         - encoder
@@ -79,13 +80,15 @@ algorithm:
     #  - MNIST (Image size=28)
     data_transforms:
         train_transform:
-            name: SimCLR
+            name: SwaV
             parameters:
-                input_size: 32
+                crop_sizes: 
+                    - 32
+                    - 32
 
     completion_modules_name:
-        - projector
-        
+        - projection_head
+
     personalization:
 
         # Number of epochs for local training in each communication round
@@ -102,11 +105,11 @@ algorithm:
 
         logging_iteration_interval: 50
         logging_epoch_interval: 1
-        model_logging_epoch_interval: 5
+        model_logging_epoch_interval: 2
 
         # the ratio of clients participanting in training
         participant_clients_ratio: 0.66667
-        
+
         # whether maintain and load the trained 
         # personalied model
         # set to be true, each client will load
@@ -124,18 +127,13 @@ algorithm:
 parameters:
 
     optimizer:
-        lr: 0.4
+        lr: 0.01
         momentum: 0.9
-        trust_coeff: 0.02
-        weight_decay: 0.00001
+        weight_decay: 0.0
 
     learning_rate:
         T_max: 600
         eta_min: 1.0E-3
-
-    loss_criterion:
-        temperature: 0.2
-
 
     personalization:
 
@@ -153,4 +151,3 @@ parameters:
 
         model:
             num_classes: 10
-
