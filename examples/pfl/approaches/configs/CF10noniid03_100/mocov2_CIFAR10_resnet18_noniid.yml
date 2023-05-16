@@ -60,7 +60,7 @@ trainer:
     model_name: MoCoV2
     encoder_name: resnet_18
 
-    projection_hidden_dim: 2048
+    projection_hidden_dim: 1024
     projection_out_dim: 256
 
     global_modules_name:
