@@ -13,7 +13,6 @@ in the Proceedings of ICML 2021.
 """
 
 
-from pflbases import personalized_trainer
 from pflbases import personalized_client
 from pflbases import fedavg_personalized_server
 from pflbases import fedavg_partial
@@ -21,12 +20,13 @@ from pflbases import fedavg_partial
 from pflbases.trainer_callbacks import separate_trainer_callbacks
 from pflbases.client_callbacks import base_callbacks
 
+import fedavgft_trainer 
 
 def main():
     """
     A Plato personalized federated learning sesstion for FedAvg with fine-tuning.
     """
-    trainer = personalized_trainer.Trainer
+    trainer = fedavgft_trainer.Trainer
     client = personalized_client.Client(
         trainer=trainer,
         algorithm=fedavg_partial.Algorithm,
