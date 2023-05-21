@@ -45,6 +45,14 @@ class PersonalizedModelMetricCallback(base_callbacks.PersonalizedMetricCallback)
         3). at the end of each personalization.
     ."""
 
+    def on_train_run_start(self, trainer, config, **kwargs):
+        """Ensuring point 2)."""
+        if (
+            trainer.personalized_learning
+            and trainer.current_round == Config().trainer.rounds + 1
+        ):
+            super().on_train_run_start(trainer, config, **kwargs)
+
     def on_train_epoch_end(self, trainer, config, **kwargs):
         """Ensuring point 2)."""
         if (

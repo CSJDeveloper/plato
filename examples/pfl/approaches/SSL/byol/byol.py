@@ -72,8 +72,6 @@ class Trainer(ssl_trainer.Trainer):
             )
 
 
-
-
 def main():
     """
     A personalized federated learning sesstion for BYOL approach.

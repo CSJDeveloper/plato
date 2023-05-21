@@ -9,6 +9,7 @@ clients:
     # Should the clients compute test accuracy locally?
     do_test: false
 
+
 server:
 
     address: 127.0.0.1
@@ -20,6 +21,7 @@ server:
 data:
     # The training and testing dataset
     datasource: MNIST
+    personalized_datasource: MNIST
 
     # Number of samples in each partition
     partition_size: 2000
@@ -87,8 +89,24 @@ algorithm:
 
     personalization:
 
+        # Number of epochs for local training in each communication round
+        #   The batch size for the downstream task can be larger as it
+        # does not utilize the
+        epochs: 40
+        batch_size: 64
+        optimizer: SGD
+        lr_scheduler: MultiStepLR
+        loss_criterion: CrossEntropyLoss
+
+        model_type: general_multilayer
+        model_name: linear_mlp
+
+        logging_iteration_interval: 50
+        logging_epoch_interval: 1
+        model_logging_epoch_interval: 5
+
         # the ratio of clients participanting in training
-        participant_clients_ratio: 1.0
+        participant_clients_ratio: 0.5
         
         # whether maintain and load the trained 
         # personalied model
@@ -99,9 +117,9 @@ algorithm:
         # do personalization 
         # for every `do_personalization_interval` rounds
         # set -1 to do personalized only after the final round
-        do_personalization_interval: 0
+        do_personalization_interval: -1
         # total, participant, nonparticipant
-        do_personalization_group: nonparticipant
+        do_personalization_group: total
 
 
 parameters:
@@ -118,3 +136,21 @@ parameters:
 
     loss_criterion:
         eps: 1.0E-8
+
+    personalization:
+
+        optimizer:
+            lr: 0.01
+            momentum: 0.9
+            weight_decay: 0.0
+
+        learning_rate:
+            gamma: 0.3
+            milestone_steps: 20ep,30ep
+
+        loss_criterion:
+            label_smoothing: 0.5
+
+        model:
+            num_classes: 10
+
