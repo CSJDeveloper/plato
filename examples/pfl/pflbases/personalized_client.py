@@ -105,7 +105,9 @@ class Client(simple.Client):
         ):
             self.personalized_model = self.custom_personalized_model
 
-        if self.trainer.personalized_model is None:
+        if self.trainer.personalized_model is None and hasattr(
+            Config().algorithm.personalization, "model_name"
+        ):
             self.trainer.define_personalized_model(self.personalized_model)
 
         self.personalized_model = self.trainer.personalized_model
