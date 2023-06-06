@@ -3,3 +3,4 @@ matplotlib
 scipy
 scikit-learn
 lightly
+open_clip_torch
