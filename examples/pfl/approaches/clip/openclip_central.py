@@ -34,9 +34,14 @@ dataset_name = Config().data.datasource
 datasource = datasources_registry.get(
     train_transform=None, test_transform=clip_model.preprocesser
 )
+
 testset = datasource.get_test_set()
 
-text_descriptions = [f"A photo of a {label}" for label in testset.classes]
+dataset_prompt_tmpl = prompts_template.templates[dataset_name]
+data_classes_prompts = hard_prompts.create_classification_prompts(
+    classes_name=dataset_prompt_tmpl["classes"],
+    prompts_template=dataset_prompt_tmpl["templates"],
+)
 
 test_loader = torch.utils.data.DataLoader(dataset=testset, shuffle=True, batch_size=3)
 
@@ -49,7 +54,7 @@ indx = 0
 with torch.no_grad():
     for examples, labels in test_loader:
         outputs = clip_model.zeroshot_classification_forward(
-            images=examples, text_prompts=text_descriptions
+            images=examples, text_prompts=data_classes_prompts
         )
 
         whole_predictions.append(outputs["probs"])
