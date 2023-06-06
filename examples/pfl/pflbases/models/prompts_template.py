@@ -11,8 +11,8 @@ https://github.com/openai/CLIP/blob/main/data/prompts.md
 
 """
 
-prompts_template = {
-    "CIFAR1O": {
+templates = {
+    "CIFAR10": {
         "classes": [
             "airplane",
             "automobile",
