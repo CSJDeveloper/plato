@@ -5,6 +5,8 @@ https://github.com/mlfoundations/open_clip
 
 [1]. Learning Transferable Visual Models From Natural Language Supervision, 21.
 
+Note that images are processed within the forward function by applying the self.processor
+Therefore, there is no need to have a visual transform in the data loading part.
 """
 
 import logging
@@ -27,6 +29,7 @@ class CLIP(nn.Module):
         # get the name of clip model
         # for example, convnext_base_w
         model_name = Config().trainer.model_name
+
         # get the name of pretrained dataset
         # for example, laion2b_s13b_b82k_augreg
         pretrained_data_name = Config().trainer.pretrained_dataset
@@ -41,6 +44,10 @@ class CLIP(nn.Module):
 
     def model_forward(self, images=None, text_prompts=None):
         """Forwarding the model to get embeddings."""
+
+        # preprocess images within the forward part
+        images = self.preprocess(images)
+
         text_tokens = tokenizer.tokenize(text_prompts)
 
         with torch.no_grad():

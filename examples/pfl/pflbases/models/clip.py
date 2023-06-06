@@ -3,6 +3,8 @@ Implementation of CLIP [1] model.
 
 [1]. Learning Transferable Visual Models From Natural Language Supervision, 21.
 
+Note that images are processed within the forward function by applying the self.processor
+Therefore, there is no need to have a visual transform in the data loading part.
 """
 
 import logging
@@ -38,6 +40,7 @@ class CLIP(nn.Module):
 
     def model_forward(self, images=None, text_prompts=None):
         """Forwarding the model to get embeddings."""
+        # preprocess images within the forward part
         inputs = self.processor(
             text=text_prompts,
             images=images,
